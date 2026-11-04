@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=EchoSketch
+GenericName=Sound Matching Game
+Comment=Listen to real-world sounds and match them to pictures (ages 3+)
+Exec=echosketch
+Icon=echosketch
+Terminal=false
+Categories=Game;Education;KidsGame;
+Keywords=sounds;animals;kids;learning;spelling;

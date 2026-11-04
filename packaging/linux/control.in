@@ -1,0 +1,17 @@
+Package: echosketch
+Version: @VERSION@
+Section: games
+Priority: optional
+Architecture: amd64
+Depends: libc6 (>= 2.36)
+Installed-Size: @SIZE@
+Maintainer: Shawn Rapaz <info@shoukugames.org>
+Homepage: https://shoukugames.org/
+Description: sound matching game for young children (ages 3+)
+ EchoSketch plays a real-world sound - a dog, a doorbell, a fire truck -
+ and the child picks the matching cartoon picture from four choices.
+ Every answer is spoken aloud and spelled letter by letter so children
+ connect the sound, the picture, the spoken word and its spelling.
+ .
+ Levels grow harder, each round has a 99 second timer, and a grown-ups
+ area shows each player's progress and the sounds they found tricky.

@@ -1,0 +1,544 @@
+{
+ "dog": [
+  {
+   "file": "Barking of a dog 2.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/5/58/Barking_of_a_dog_2.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Barking_of_a_dog_2.ogg",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "author": "Amada44"
+  }
+ ],
+ "cat": [
+  {
+   "file": "Meow of a pleading cat.oga",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Meow_of_a_pleading_cat.oga?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Meow_of_a_pleading_cat.oga",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "Heismark"
+  }
+ ],
+ "cow": [
+  {
+   "file": "Single Cow Moo.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Single_Cow_Moo.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Single_Cow_Moo.ogg",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "author": "MichaeltheFox8621"
+  }
+ ],
+ "pig": [
+  {
+   "file": "Mudchute pig 1.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/7/73/Mudchute_pig_1.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Mudchute_pig_1.ogg",
+   "license": "CC BY-SA 3.0",
+   "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+   "author": "Secretlondon"
+  },
+  {
+   "file": "Mudchute pig 2.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Mudchute_pig_2.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Mudchute_pig_2.ogg",
+   "license": "CC BY-SA 3.0",
+   "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+   "author": "Secretlondon"
+  },
+  {
+   "file": "Mudchute pig 3.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/6/65/Mudchute_pig_3.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Mudchute_pig_3.ogg",
+   "license": "CC BY-SA 3.0",
+   "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+   "author": "Secretlondon"
+  },
+  {
+   "file": "Pig grunt - Erdie.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Pig_grunt_-_Erdie.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Pig_grunt_-_Erdie.ogg",
+   "license": "CC BY 3.0",
+   "license_url": "https://creativecommons.org/licenses/by/3.0",
+   "author": "erdie"
+  }
+ ],
+ "sheep": [
+  {
+   "file": "Sheep bleating.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/1/13/Sheep_bleating.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Sheep_bleating.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "earthcalling"
+  }
+ ],
+ "duck": [
+  {
+   "file": "Mudchute duck 1.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Mudchute_duck_1.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Mudchute_duck_1.ogg",
+   "license": "CC BY-SA 3.0",
+   "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+   "author": "Secretlondon"
+  },
+  {
+   "file": "Mudchute duck 2.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Mudchute_duck_2.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Mudchute_duck_2.ogg",
+   "license": "CC BY-SA 3.0",
+   "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+   "author": "Secretlondon"
+  }
+ ],
+ "horse": [
+  {
+   "file": "Wiehern.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/d/db/Wiehern.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Wiehern.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "Hü."
+  }
+ ],
+ "rooster": [
+  {
+   "file": "Medium rooster crowing.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Medium_rooster_crowing.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Medium_rooster_crowing.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "alys"
+  }
+ ],
+ "hen": [
+  {
+   "file": "Hen announcing shes lain an egg.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/4/44/Hen_announcing_shes_lain_an_egg.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Hen_announcing_shes_lain_an_egg.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "alys"
+  }
+ ],
+ "lion": [
+  {
+   "file": "Lion raring-sound1TamilNadu178.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Lion_raring-sound1TamilNadu178.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Lion_raring-sound1TamilNadu178.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "த*உழவன்"
+  }
+ ],
+ "elephant": [
+  {
+   "file": "Elephant voice - trumpeting.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/4/40/Elephant_voice_-_trumpeting.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Elephant_voice_-_trumpeting.ogg",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "author": "தகவலுழவன்"
+  }
+ ],
+ "chimp": [
+  {
+   "file": "Pant-hoot call made by a male chimpanzee.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/5/56/Pant-hoot_call_made_by_a_male_chimpanzee.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Pant-hoot_call_made_by_a_male_chimpanzee.ogg",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0",
+   "author": "Pawel Fedurek et al."
+  }
+ ],
+ "owl": [
+  {
+   "file": "Strix aluco - Tawny Owl XC500920.mp3",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Strix_aluco_-_Tawny_Owl_XC500920.mp3?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Strix_aluco_-_Tawny_Owl_XC500920.mp3",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "author": "Alvaro Ortiz Troncoso"
+  }
+ ],
+ "wolf": [
+  {
+   "file": "Wolf howls.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Wolf_howls.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Wolf_howls.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "unknown"
+  }
+ ],
+ "bee": [
+  {
+   "file": "Bee buzzing sound (animal noises).opus",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Bee_buzzing_sound_%28animal_noises%29.opus?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Bee_buzzing_sound_(animal_noises).opus",
+   "license": "CC BY 3.0",
+   "license_url": "https://creativecommons.org/licenses/by/3.0",
+   "author": "Free Sounds Library User Spanac"
+  }
+ ],
+ "frog": [
+  {
+   "file": "Single Frog Croak.oga",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Single_Frog_Croak.oga?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Single_Frog_Croak.oga",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "author": "MichaeltheFox8621"
+  }
+ ],
+ "crow": [
+  {
+   "file": "Corvus corone - Carrion Crow XC509838.mp3",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Corvus_corone_-_Carrion_Crow_XC509838.mp3?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Corvus_corone_-_Carrion_Crow_XC509838.mp3",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "author": "Marie-Lan Taÿ Pamart"
+  }
+ ],
+ "doorbell": [
+  {
+   "file": "Doorbell-cheap-dingdong.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Doorbell-cheap-dingdong.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Doorbell-cheap-dingdong.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "unknown"
+  }
+ ],
+ "phone": [
+  {
+   "file": "Model 500 Telephone British ring.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Model_500_Telephone_British_ring.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Model_500_Telephone_British_ring.ogg",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "author": "CianMcCann"
+  }
+ ],
+ "clock": [
+  {
+   "file": "Clock ticking.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/5/56/Clock_ticking.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Clock_ticking.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "natalie"
+  }
+ ],
+ "alarm": [
+  {
+   "file": "Mechanical Clock Ring (Directory.Audio).mp3",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/6/69/Mechanical_Clock_Ring_%28Directory.Audio%29.mp3?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Mechanical_Clock_Ring_(Directory.Audio).mp3",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "author": "Yoo-toob-FX (https://directory.audio/authoritems/665-yoo-toob-fx, https://web.archive.org/web/20230721115857/https://directory.audio/authoritems/665-yoo-toob-fx)"
+  }
+ ],
+ "toilet": [
+  {
+   "file": "Toilet flush.flac",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/2/29/Toilet_flush.flac?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Toilet_flush.flac",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "author": "ᐃᓄᒃᑎᑐᑦ"
+  }
+ ],
+ "knock": [
+  {
+   "file": "Knocking on wood or door.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Knocking_on_wood_or_door.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Knocking_on_wood_or_door.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "stephan"
+  }
+ ],
+ "baby": [
+  {
+   "file": "Baby long wanting cry.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Baby_long_wanting_cry.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Baby_long_wanting_cry.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "natalie"
+  }
+ ],
+ "tap": [
+  {
+   "file": "Faucet water into sink.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/1/19/Faucet_water_into_sink.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Faucet_water_into_sink.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "stephan"
+  }
+ ],
+ "sneeze": [
+  {
+   "file": "Sneezing.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Sneezing.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Sneezing.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "jc"
+  }
+ ],
+ "laugh": [
+  {
+   "file": "Four Years Old child laughing.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/8/80/Four_Years_Old_child_laughing.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Four_Years_Old_child_laughing.ogg",
+   "license": "CC BY 3.0",
+   "license_url": "https://creativecommons.org/licenses/by/3.0",
+   "author": "morgantj"
+  }
+ ],
+ "brush": [
+  {
+   "file": "Brushing teeth.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/0/07/Brushing_teeth.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Brushing_teeth.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "stephan"
+  }
+ ],
+ "car": [
+  {
+   "file": "Car Horn.wav",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Car_Horn.wav?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Car_Horn.wav",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "author": "15HPanska_Ruttner_Jan"
+  }
+ ],
+ "train": [
+  {
+   "file": "WWS SteamWhistle.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/5/51/WWS_SteamWhistle.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:WWS_SteamWhistle.ogg",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0",
+   "author": "Work With Sounds / Konrad Gutkowski"
+  }
+ ],
+ "plane": [
+  {
+   "file": "428086 inspectorj airplane-boeing-flyby-right-to-left-a.wav",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/428086_inspectorj_airplane-boeing-flyby-right-to-left-a.wav?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:428086_inspectorj_airplane-boeing-flyby-right-to-left-a.wav",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0",
+   "author": "InspectorJ"
+  }
+ ],
+ "firetruck": [
+  {
+   "file": "WWS Fireenginesiren.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/4/47/WWS_Fireenginesiren.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:WWS_Fireenginesiren.ogg",
+   "license": "CC BY 4.0",
+   "license_url": "https://creativecommons.org/licenses/by/4.0",
+   "author": "Work With Sounds / Konrad Gutkowski"
+  }
+ ],
+ "police": [
+  {
+   "file": "American police siren i.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/a/ae/American_police_siren_i.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:American_police_siren_i.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "lezer"
+  }
+ ],
+ "helicopter": [
+  {
+   "file": "Helicopter over a lake.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Helicopter_over_a_lake.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Helicopter_over_a_lake.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "ezwa"
+  }
+ ],
+ "motorbike": [
+  {
+   "file": "Motorbike 2.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/0/04/Motorbike_2.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Motorbike_2.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "ezwa"
+  }
+ ],
+ "bicycle": [
+  {
+   "file": "Bicycle-bell-1.wav",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/6/68/Bicycle-bell-1.wav?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Bicycle-bell-1.wav",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "author": "Soundscape_Leuphana"
+  }
+ ],
+ "ship": [
+  {
+   "file": "Cruise ship Albatros ship horn.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/0/07/Cruise_ship_Albatros_ship_horn.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Cruise_ship_Albatros_ship_horn.ogg",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "author": "Tvabutzku1234"
+  }
+ ],
+ "rain": [
+  {
+   "file": "Rain against the window.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/4/41/Rain_against_the_window.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Rain_against_the_window.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "cori"
+  }
+ ],
+ "thunder": [
+  {
+   "file": "Thunder 01.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Thunder_01.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Thunder_01.ogg",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "author": "Amuzujoe"
+  }
+ ],
+ "waves": [
+  {
+   "file": "Sea waves.wav",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/8/84/Sea_waves.wav?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Sea_waves.wav",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "author": "Ganesh Mohan T"
+  }
+ ],
+ "wind": [
+  {
+   "file": "Wind in Swedish pine forest at 25 mps.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Wind_in_Swedish_pine_forest_at_25_mps.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Wind_in_Swedish_pine_forest_at_25_mps.ogg",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "author": "W.carter"
+  }
+ ],
+ "birds": [
+  {
+   "file": "Birds chirping in a garden.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Birds_chirping_in_a_garden.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Birds_chirping_in_a_garden.ogg",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "author": "Akum20"
+  }
+ ],
+ "cricket": [
+  {
+   "file": "Field cricket Gryllus pennsylvanicus.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/8/80/Field_cricket_Gryllus_pennsylvanicus.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Field_cricket_Gryllus_pennsylvanicus.ogg",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "author": "Thatcher"
+  }
+ ],
+ "drum": [
+  {
+   "file": "Drum beat.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Drum_beat.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Drum_beat.ogg",
+   "license": "CC BY-SA 3.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+   "author": "Mattgirling"
+  }
+ ],
+ "piano": [
+  {
+   "file": "Beethoven Piano Sonata Op 22, 2nd movement, bars 30-32.wav",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/3/31/Beethoven_Piano_Sonata_Op_22%2C_2nd_movement%2C_bars_30-32.wav?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Beethoven_Piano_Sonata_Op_22,_2nd_movement,_bars_30-32.wav",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "Ludwig van Beethoven"
+  }
+ ],
+ "guitar": [
+  {
+   "file": "Audio files of spanish guitar chords 18.wav",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/4/41/Audio_files_of_spanish_guitar_chords_18.wav?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Audio_files_of_spanish_guitar_chords_18.wav",
+   "license": "CC0",
+   "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+   "author": "Wilfredor"
+  }
+ ],
+ "trumpet": [
+  {
+   "file": "Trumpet playing short excerpt for comparison with flugelhorn.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Trumpet_playing_short_excerpt_for_comparison_with_flugelhorn.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Trumpet_playing_short_excerpt_for_comparison_with_flugelhorn.ogg",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "author": "Ovinus Real"
+  }
+ ],
+ "violin": [
+  {
+   "file": "Violin chords.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Violin_chords.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Violin_chords.ogg",
+   "license": "CC BY-SA 3.0",
+   "license_url": "http://creativecommons.org/licenses/by-sa/3.0/",
+   "author": "Myself"
+  }
+ ],
+ "flute": [
+  {
+   "file": "Flute 2.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Flute_2.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Flute_2.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "hokuspokus"
+  }
+ ],
+ "maracas": [
+  {
+   "file": "Maracas.ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/1/10/Maracas.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Maracas.ogg",
+   "license": "Public domain",
+   "license_url": "",
+   "author": "unknown"
+  }
+ ],
+ "bell": [
+  {
+   "file": "Samariter Church Bell II (g).ogg",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/5/52/Samariter_Church_Bell_II_%28g%29.ogg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "page": "https://commons.wikimedia.org/wiki/File:Samariter_Church_Bell_II_(g).ogg",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+   "author": "Pete w. View"
+  }
+ ]
+}
