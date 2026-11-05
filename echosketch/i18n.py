@@ -254,7 +254,7 @@ STRINGS = {
     },
 }
 
-RELEASE_DATE = {"en": "November 5, 2026", "ja": "2026年11月5日"}
+RELEASE_DATE = {"en": "November 6, 2026", "ja": "2026年11月6日"}
 AGES = {"en": "3+", "ja": "3さい から"}
 AGES_FULL = {"en": "3+", "ja": "3歳以上"}
 

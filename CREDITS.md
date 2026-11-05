@@ -1,6 +1,6 @@
 # EchoSketch Credits
 
-**EchoSketch v0.1.0** — released November 5, 2026
+**EchoSketch v0.1.1** — released November 6, 2026
 
 Created by **Shawn Rapaz & Claude Code**  
 Website: <https://shoukugames.org/>  

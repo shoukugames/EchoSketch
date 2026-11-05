@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| Version | **v0.1.0** (released November 5, 2026) |
+| Version | **v0.1.1** (released November 6, 2026) |
 | Recommended ages | **3+** |
 | Created by | Shawn Rapaz & Claude Code |
 | Website | <https://shoukugames.org/> |
@@ -93,7 +93,7 @@ a passing motorbike or birds in the park, ask "What's that sound?"
 ### Linux (Debian, Ubuntu, Mint and similar, 64-bit)
 
 ```sh
-sudo apt install ./echosketch_0.1.0_amd64.deb
+sudo apt install ./echosketch_0.1.1_amd64.deb
 echosketch            # or find "EchoSketch" in your applications menu
 ```
 
@@ -101,7 +101,7 @@ Uninstall with `sudo apt remove echosketch`.
 
 ### Windows (64-bit)
 
-Download `EchoSketch-0.1.0-win64.exe` and double-click it. No installation needed.
+Download `EchoSketch-0.1.1-win64.exe` and double-click it. No installation needed.
 Windows SmartScreen may warn about an unsigned app. Choose *More info → Run anyway*.
 
 ### From source

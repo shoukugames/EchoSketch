@@ -5,7 +5,7 @@ Thank you for helping make EchoSketch better for kids!
 **Email:** <info@shoukugames.org>  
 **Website:** <https://shoukugames.org/>
 
-Please use the subject line **`[EchoSketch v0.1.0] short description`**, and copy the
+Please use the subject line **`[EchoSketch v0.1.1] short description`**, and copy the
 template below into your message.
 
 ## Before you report
@@ -20,7 +20,7 @@ template below into your message.
 ## Bug report template
 
 ```
-EchoSketch version:      (e.g. v0.1.0)
+EchoSketch version:      (e.g. v0.1.1)
 Operating system:        (e.g. Windows 11, Ubuntu 24.04, Debian 12)
 Installed from:          (.deb / .exe / source)
 Screen / full screen?:   (e.g. 1920x1080, full screen)
