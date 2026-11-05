@@ -4,7 +4,7 @@
 """Sound loading, voice sequencing and background-music ducking."""
 import pygame
 
-from .catalog import ITEMS
+from . import i18n
 from .paths import ASSETS
 
 MUSIC_VOLUME = 0.32
@@ -50,14 +50,19 @@ class Audio:
     def clue(self, item):
         return self.sound(f"sounds/{item}.ogg")
 
-    def word(self, item):
-        return self.sound(f"voice/word_{item}.ogg")
+    @staticmethod
+    def _voice_dir():
+        return "voice/ja/" if i18n.lang() == "ja" else "voice/"
 
-    def letter(self, ch):
-        return self.sound(f"voice/letter_{ch.lower()}.ogg")
+    def word(self, item):
+        return self.sound(f"{self._voice_dir()}word_{item}.ogg")
+
+    def unit(self, unit):
+        """One spelling unit: a letter in English, a kana in Japanese."""
+        return self.sound("voice/" + i18n.unit_file(unit))
 
     def say(self, key):
-        return self.sound(f"voice/say_{key}.ogg")
+        return self.sound(f"{self._voice_dir()}say_{key}.ogg")
 
     # ---- playback --------------------------------------------------------
     def sfx(self, name, volume=1.0):
@@ -128,17 +133,19 @@ class Audio:
 
 
 def spelling_steps(audio, item, on_letter=None, intro=True):
-    """Voice steps that say the word, spell it letter by letter, then say it again."""
-    name = ITEMS[item]["name"]
+    """Voice steps that say the word, spell it piece by piece (letters in English, kana in
+    Japanese), then say it again. on_letter(i) gets the index into i18n.spell_units()."""
+    units = i18n.spell_units(i18n.item_name(item))
     steps = []
     if intro:
         steps.append(("voice", audio.word(item)))
         steps.append(("wait", 0.25))
-    letters = [(i, c) for i, c in enumerate(name) if c.isalpha()]
-    for i, c in letters:
+    for i, u in enumerate(units):
+        if not i18n.is_spoken(u):
+            continue
         if on_letter:
             steps.append(("call", (lambda idx=i: on_letter(idx))))
-        steps.append(("voice", audio.letter(c)))
+        steps.append(("voice", audio.unit(u)))
     if on_letter:
         steps.append(("call", lambda: on_letter(-1)))
     steps.append(("wait", 0.2))

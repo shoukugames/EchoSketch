@@ -29,11 +29,15 @@ def main():
         "- [Andika](https://software.sil.org/andika/) — SIL International, SIL Open Font License 1.1 "
         "(`assets/fonts/Andika-OFL.txt`)",
         "- [Fredoka](https://github.com/hafontia-zz/Fredoka) — Milena Brandão, SIL Open Font License 1.1 "
-        "(`assets/fonts/Fredoka-OFL.txt`)", "",
+        "(`assets/fonts/Fredoka-OFL.txt`)",
+        "- [M PLUS Rounded 1c](https://fonts.google.com/specimen/M+PLUS+Rounded+1c) (Japanese) — Coji Morishita, "
+        "M+ Fonts Project, SIL Open Font License 1.1 (`assets/fonts/MPLUSRounded1c-OFL.txt`)", "",
         "## Voice", "",
-        "Spoken words, letters and phrases were generated with [Piper](https://github.com/rhasspy/piper)",
-        "text-to-speech using the `en_US-ljspeech-high` voice, trained on the public-domain",
-        "[LJ Speech dataset](https://keithito.com/LJ-Speech-Dataset/).", "",
+        "Spoken words, letters, kana and phrases were generated with the",
+        "[Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) neural text-to-speech model (Apache-2.0)",
+        "via [kokoro-onnx](https://github.com/thewh1teagle/kokoro-onnx): voice `af_heart` for English and",
+        "`jf_alpha` for Japanese, with Japanese pronunciation from",
+        "[misaki](https://github.com/hexgrad/misaki) (Apache-2.0).", "",
         "## Music and sound effects", "",
         "The ambient background music and interface sound effects are original, synthesised by",
         "`tools/make_music.py`, and are part of EchoSketch (GPL-3.0).", "",

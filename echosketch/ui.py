@@ -7,6 +7,7 @@ import random
 
 import pygame
 
+from . import i18n
 from .paths import ASSETS
 
 W, H = 1280, 720
@@ -28,19 +29,38 @@ _fonts = {}
 _images = {}
 
 
-def font(size, kind="body"):
-    """kind: 'title' (Fredoka), 'body' (Andika Bold), 'plain' (Andika Regular)."""
-    key = (size, kind)
+FONT_FILES = {
+    "en": {"title": "Fredoka.ttf", "body": "Andika-Bold.ttf", "plain": "Andika-Regular.ttf"},
+    # M PLUS Rounded 1c has kana, kanji and Latin, so Japanese text never mixes fonts
+    "ja": {"title": "MPLUSRounded1c-Bold.ttf", "body": "MPLUSRounded1c-Bold.ttf",
+           "plain": "MPLUSRounded1c-Medium.ttf"},
+}
+JA_SCALE = 0.86   # full-width kana look bigger than Latin letters at the same size
+
+
+def font(size, kind="body", lang=None):
+    """kind: 'title', 'body' or 'plain'; the font family follows the current language
+    unless lang is given."""
+    lang = lang or i18n.lang()
+    key = (size, kind, lang)
     if key not in _fonts:
-        name = {"title": "Fredoka.ttf", "body": "Andika-Bold.ttf", "plain": "Andika-Regular.ttf"}[kind]
+        name = FONT_FILES[lang][kind]
+        px = max(8, int(size * JA_SCALE)) if lang == "ja" else size
         try:
-            f = pygame.font.Font(str(ASSETS / "fonts" / name), size)
+            f = pygame.font.Font(str(ASSETS / "fonts" / name), px)
         except (OSError, pygame.error):
-            f = pygame.font.Font(None, size)
-        if kind == "title":
+            f = pygame.font.Font(None, px)
+        if kind == "title" and lang == "en":
             f.set_bold(True)
         _fonts[key] = f
     return _fonts[key]
+
+
+def fit_size(msg, size, max_w, kind="body", lang=None):
+    """Largest size <= size at which msg fits in max_w pixels."""
+    while size > 10 and font(size, kind, lang).size(str(msg))[0] > max_w:
+        size -= 2
+    return size
 
 
 def image(name, size=None):
@@ -59,8 +79,10 @@ def image(name, size=None):
 
 
 def text(surface, msg, size, color, center=None, kind="body", topleft=None, midleft=None,
-         outline=None, outline_w=3, shadow=False, alpha=255):
-    f = font(size, kind)
+         outline=None, outline_w=3, shadow=False, alpha=255, max_w=None, lang=None):
+    if max_w:
+        size = fit_size(msg, size, max_w, kind, lang)
+    f = font(size, kind, lang)
     img = f.render(str(msg), True, color)
     if outline:
         o = f.render(str(msg), True, outline)
@@ -94,17 +116,35 @@ def _place(r, center, topleft, midleft):
         r.midleft = midleft
 
 
+NO_LINE_START = set("、。，．！？!?)）」』】・ー…ぁぃぅぇぉっゃゅょァィゥェォッャュョ:：")
+
+
 def wrap(msg, size, width, kind="plain"):
+    """Break msg into lines no wider than width: at spaces, and inside a word (as Japanese
+    needs) when a single word is too wide, never starting a line with closing punctuation."""
     f = font(size, kind)
     lines, cur = [], ""
     for word in msg.split():
         trial = (cur + " " + word).strip()
         if f.size(trial)[0] <= width:
             cur = trial
-        else:
-            if cur:
-                lines.append(cur)
+            continue
+        if cur and f.size(word)[0] <= width:
+            lines.append(cur)
             cur = word
+            continue
+        # break inside the word, character by character
+        if cur:
+            cur += " "
+        for ch in word:
+            if f.size(cur + ch)[0] <= width or not cur.strip():
+                cur += ch
+            elif ch in NO_LINE_START and len(cur) > 1:
+                lines.append(cur[:-1])
+                cur = cur[-1] + ch
+            else:
+                lines.append(cur.rstrip())
+                cur = ch
     if cur:
         lines.append(cur)
     return lines
@@ -139,7 +179,7 @@ class Button:
     """A chunky, friendly button with hover bounce and press squash."""
 
     def __init__(self, rect, label="", color=PALETTE[5], icon=None, size=34, on_click=None,
-                 text_color=WHITE, radius=None, icon_size=None, sound="pop"):
+                 text_color=WHITE, radius=None, icon_size=None, sound="pop", label_lang=None):
         self.rect = pygame.Rect(rect)
         self.label = label
         self.color = color
@@ -154,6 +194,7 @@ class Button:
         self.enabled = True
         self.visible = True
         self.sound = sound
+        self.label_lang = label_lang     # draw the label in this language's font
 
     def handle(self, e, app):
         if not (self.visible and self.enabled):
@@ -193,17 +234,21 @@ class Button:
         content = []
         if self.icon:
             content.append(("img", image(self.icon, self.icon_size)))
+        size = self.size
         if self.label:
             content.append(("txt", self.label))
-        widths = [c[1].get_width() if c[0] == "img" else font(self.size).size(c[1])[0] for c in content]
+            room = r.w - 36 - (self.icon_size + 12 if self.icon else 0)
+            size = fit_size(self.label, self.size, room, lang=self.label_lang)
+        widths = [c[1].get_width() if c[0] == "img" else font(size, lang=self.label_lang).size(c[1])[0]
+                  for c in content]
         total = sum(widths) + 12 * (len(content) - 1)
         x = r.centerx - total // 2
         for (kind, val), w in zip(content, widths):
             if kind == "img":
                 surface.blit(val, val.get_rect(midleft=(x, r.centery)))
             else:
-                text(surface, val, self.size, self.text_color, midleft=(x, r.centery + 1),
-                     outline=darken(base, 0.35), outline_w=2)
+                text(surface, val, size, self.text_color, midleft=(x, r.centery + 1),
+                     outline=darken(base, 0.35), outline_w=2, lang=self.label_lang)
             x += w + 12
 
 

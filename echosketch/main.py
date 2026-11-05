@@ -19,9 +19,10 @@ import os
 import sys
 
 os.environ.setdefault("PYGAME_HIDE_SUPPORT_PROMPT", "1")
+os.environ.setdefault("SDL_IME_SHOW_UI", "1")     # show the Japanese IME candidate window
 import pygame  # noqa: E402
 
-from . import __app_name__, __version__  # noqa: E402
+from . import __app_name__, __version__, i18n  # noqa: E402
 from .audio import Audio  # noqa: E402
 from .paths import ASSETS  # noqa: E402
 from .progress import Progress  # noqa: E402
@@ -31,12 +32,13 @@ from .ui import H, W, Sky  # noqa: E402
 class App:
     def __init__(self, windowed=False):
         pygame.init()
-        pygame.display.set_caption(f"{__app_name__} v{__version__}")
         try:
             pygame.display.set_icon(pygame.image.load(str(ASSETS / "icon.png")))
         except (pygame.error, FileNotFoundError):
             pass
         self.progress = Progress()
+        i18n.set_lang(self.progress.settings.get("lang") or i18n.system_lang())
+        self.set_caption()
         flags = pygame.SCALED | pygame.RESIZABLE
         self.screen = pygame.display.set_mode((W, H), flags, vsync=1)
         if self.progress.settings.get("fullscreen") and not windowed:
@@ -68,6 +70,20 @@ class App:
         self.audio.music_on = not self.audio.music_on
         self.progress.settings["music"] = self.audio.music_on
         self.progress.save()
+
+    @staticmethod
+    def set_caption():
+        pygame.display.set_caption(f"{i18n.tr('app_name')} v{__version__}")
+
+    def toggle_lang(self):
+        i18n.set_lang("en" if i18n.lang() == "ja" else "ja")
+        self.progress.settings["lang"] = i18n.lang()
+        self.progress.save()
+        self.set_caption()
+        from .scenes import TitleScene
+        TitleScene.greeted = False       # say the welcome again, in the new language
+        self.audio.stop_voice()
+        self.go(TitleScene(self))
 
     def toggle_fullscreen(self):
         pygame.display.toggle_fullscreen()
@@ -105,8 +121,12 @@ def main(argv=None):
     ap = argparse.ArgumentParser(prog="echosketch", description="EchoSketch - listen, look and learn.")
     ap.add_argument("--version", action="version", version=f"{__app_name__} {__version__}")
     ap.add_argument("--windowed", action="store_true", help="start in a window even if fullscreen was saved")
+    ap.add_argument("--lang", choices=i18n.LANGS, help="language to use (saved for next time)")
     args = ap.parse_args(argv)
-    App(windowed=args.windowed).run()
+    app = App(windowed=args.windowed)
+    if args.lang and args.lang != i18n.lang():
+        app.toggle_lang()
+    app.run()
     return 0
 
 

@@ -10,9 +10,10 @@ from datetime import datetime
 
 import pygame
 
-from . import CREATORS, EMAIL, RECOMMENDED_AGES, RELEASE_DATE, WEBSITE, __version__
+from . import CREATORS, EMAIL, WEBSITE, __version__, i18n
 from .audio import spelling_steps
 from .catalog import CATEGORIES, CHOICES, ITEMS, LEVELS, ROUND_SECONDS
+from .i18n import category_name, item_name, level_title, tr
 from .paths import ASSETS
 from .progress import Progress
 from .ui import (BAD, CREAM, GOOD, H, INK, INK_SOFT, PALETTE, SUN, WHITE, W, Button, Confetti,
@@ -109,13 +110,16 @@ class TitleScene(Scene):
     def __init__(self, app):
         super().__init__(app)
         self.buttons = [
-            Button((W // 2 - 170, 368, 340, 104), "Play!", GOOD, icon="ui_star", size=54, on_click=self.play,
+            Button((W // 2 - 170, 368, 340, 104), tr("play"), GOOD, icon="ui_star", size=54, on_click=self.play,
                    radius=52),
-            HoldButton((W // 2 - 300, 500, 280, 74), "Grown-ups", PALETTE[6], icon="ui_parent", size=30,
+            HoldButton((W // 2 - 300, 500, 280, 74), tr("grownups"), PALETTE[6], icon="ui_parent", size=30,
                        on_click=lambda: self.app.go(ParentsScene(self.app))),
-            Button((W // 2 + 20, 500, 280, 74), "Credits", PALETTE[1], icon="ui_book", size=30,
+            Button((W // 2 + 20, 500, 280, 74), tr("credits"), PALETTE[1], icon="ui_book", size=30,
                    on_click=lambda: self.app.go(CreditsScene(self.app))),
-            Button((W // 2 - 90, 600, 180, 60), "Quit", (150, 150, 175), size=28, on_click=self.app.quit),
+            Button((W // 2 - 90, 600, 180, 60), tr("quit"), (150, 150, 175), size=28, on_click=self.app.quit),
+            # shows the *other* language, written in that language
+            Button((24, 20, 170, 70), tr("lang_button"), PALETTE[3], size=30, on_click=self.app.toggle_lang,
+                   label_lang="en" if i18n.lang() == "ja" else "ja"),
         ]
         self.corner_buttons(back=False)
         rnd = random.Random(3)
@@ -145,6 +149,8 @@ class TitleScene(Scene):
                     self.app.audio.play_clue(n)
         if e.type == pygame.KEYDOWN and e.key in (pygame.K_RETURN, pygame.K_SPACE):
             self.play()
+        elif e.type == pygame.KEYDOWN and e.key == pygame.K_l:
+            self.app.toggle_lang()
 
     def update(self, dt):
         super().update(dt)
@@ -159,7 +165,7 @@ class TitleScene(Scene):
             rot = pygame.transform.rotozoom(img, ang, 1.0)
             s.blit(rot, rot.get_rect(center=(x, y + bob(self.t, 1.6, 10, ph))))
         # logo: each letter bounces in its own colour
-        title = "EchoSketch"
+        title = tr("app_name")
         f = font(124, "title")
         widths = [f.size(c)[0] for c in title]
         x = W // 2 - sum(widths) // 2
@@ -169,15 +175,15 @@ class TitleScene(Scene):
             text(s, c, 124, col, center=(x + widths[i] // 2, y), kind="title", outline=WHITE, outline_w=7,
                  shadow=True)
             x += widths[i]
-        text(s, "Listen  •  Look  •  Learn", 36, INK, center=(W // 2, 272), outline=WHITE, outline_w=3)
+        text(s, tr("tagline"), 36, INK, center=(W // 2, 272), outline=WHITE, outline_w=3)
         # age badge
         bx, by = W // 2, 328
         panel(s, (bx - 92, by - 22, 184, 44), SUN, radius=22, shadow=4)
-        text(s, f"Ages {RECOMMENDED_AGES}", 26, INK, center=(bx, by + 1))
+        text(s, tr("ages_badge", ages=i18n.AGES[i18n.lang()]), 26, INK, center=(bx, by + 1), max_w=168)
         self.draw_buttons(s)
         self.draw_corner_icons(s)
         if self.hint > 0:
-            text(s, "Grown-ups: keep holding...", 22, INK, center=(W // 2 - 160, 590), alpha=int(255 * self.hint))
+            text(s, tr("hold_hint"), 22, INK, center=(W // 2 - 160, 590), alpha=int(255 * self.hint), max_w=560)
         text(s, f"v{__version__}", 20, INK_SOFT, topleft=(16, H - 32))
         text(s, "shoukugames.org", 20, INK_SOFT, topleft=(W - 175, H - 32))
 
@@ -221,7 +227,7 @@ class PlayerScene(Scene):
 
     def draw(self, s):
         super().draw(s)
-        text(s, "Who is playing?", 64, INK, center=(W // 2, 80), kind="title", outline=WHITE, outline_w=5)
+        text(s, tr("who_plays"), 64, INK, center=(W // 2, 80), kind="title", outline=WHITE, outline_w=5)
         mouse = pygame.mouse.get_pos()
         for i, (rect, p) in enumerate(self.cards):
             hov = rect.collidepoint(mouse)
@@ -232,11 +238,11 @@ class PlayerScene(Scene):
                 pygame.draw.circle(s, lighten(col, 0.5), (r.centerx, r.y + 95), 62)
                 pygame.draw.line(s, col, (r.centerx - 30, r.y + 95), (r.centerx + 30, r.y + 95), 12)
                 pygame.draw.line(s, col, (r.centerx, r.y + 65), (r.centerx, r.y + 125), 12)
-                text(s, "New player", 30, INK, center=(r.centerx, r.bottom - 42))
+                text(s, tr("new_player"), 30, INK, center=(r.centerx, r.bottom - 42), max_w=r.w - 24)
             else:
                 img = image(p.get("avatar", "dog"), 130)
                 s.blit(img, img.get_rect(center=(r.centerx, r.y + 92 + (bob(self.t, 3, 4) if hov else 0))))
-                text(s, p["name"], 32, INK, center=(r.centerx, r.bottom - 52))
+                text(s, p["name"], 32, INK, center=(r.centerx, r.bottom - 52), max_w=r.w - 24)
                 stars = Progress.summary(p)["stars"]
                 star_shape(s, (r.centerx - 22, r.bottom - 20), 12, SUN)
                 text(s, f"{stars}", 22, INK_SOFT, midleft=(r.centerx - 4, r.bottom - 20))
@@ -251,8 +257,9 @@ class NewPlayerScene(Scene):
         super().__init__(app)
         self.corner_buttons()
         self.name = ""
+        self.composing = ""      # text still being typed with an input method (e.g. Japanese IME)
         self.avatar = AVATARS[len(app.progress.players) % len(AVATARS)]
-        self.go_btn = Button((W // 2 - 160, 590, 320, 90), "Let's go!", GOOD, icon="ui_star", size=42,
+        self.go_btn = Button((W // 2 - 160, 590, 320, 90), tr("lets_go"), GOOD, icon="ui_star", size=42,
                              on_click=self.create)
         self.buttons.append(self.go_btn)
         self.av_rects = []
@@ -262,10 +269,12 @@ class NewPlayerScene(Scene):
             r, c = divmod(i, per)
             x0 = W // 2 - (per * size + (per - 1) * gap) // 2
             self.av_rects.append((pygame.Rect(x0 + c * (size + gap), 330 + r * (size + gap), size, size), a))
+        self.box = pygame.Rect(W // 2 - 300, 180, 600, 90)
         pygame.key.start_text_input()
+        pygame.key.set_text_input_rect(self.box)     # where the IME candidate window goes
 
     def create(self):
-        p = self.app.progress.add_player(self.name or f"Player {len(self.app.progress.players) + 1}",
+        p = self.app.progress.add_player(self.name or tr("default_player", n=len(self.app.progress.players) + 1),
                                          self.avatar)
         pygame.key.stop_text_input()
         self.app.select_player(p)
@@ -278,11 +287,14 @@ class NewPlayerScene(Scene):
     def handle(self, e):
         super().handle(e)
         if e.type == pygame.TEXTINPUT:
+            self.composing = ""
             for ch in e.text:
-                if (ch.isalnum() or ch in " -'") and len(self.name) < 14:
+                if (ch.isalnum() or ch in " -'ー・々") and len(self.name) < 14:
                     self.name += ch
+        elif e.type == pygame.TEXTEDITING:
+            self.composing = e.text
         elif e.type == pygame.KEYDOWN:
-            if e.key == pygame.K_BACKSPACE:
+            if e.key == pygame.K_BACKSPACE and not self.composing:
                 self.name = self.name[:-1]
             elif e.key in (pygame.K_RETURN, pygame.K_KP_ENTER):
                 self.create()
@@ -295,17 +307,21 @@ class NewPlayerScene(Scene):
     def draw(self, s):
         super().draw(s)
         panel(s, (W // 2 - 430, 110, 860, 460), CREAM, radius=36)
-        text(s, "New player", 56, INK, center=(W // 2, 70), kind="title", outline=WHITE, outline_w=5)
-        text(s, "Grown-ups: type the child's name", 26, INK_SOFT, center=(W // 2, 150))
-        box = pygame.Rect(W // 2 - 300, 180, 600, 90)
+        text(s, tr("new_player"), 56, INK, center=(W // 2, 70), kind="title", outline=WHITE, outline_w=5)
+        text(s, tr("type_name"), 26, INK_SOFT, center=(W // 2, 150), max_w=820)
+        box = self.box
         pygame.draw.rect(s, WHITE, box, border_radius=24)
         pygame.draw.rect(s, PALETTE[5], box, 5, border_radius=24)
-        shown = self.name if self.name else ""
-        r = text(s, shown or "Name", 52, INK if shown else (190, 190, 205), center=box.center)
+        shown = self.name + self.composing
+        r = text(s, shown or tr("name_placeholder"), 52, INK if shown else (190, 190, 205), center=box.center,
+                 max_w=box.w - 40)
+        if self.composing:      # underline the part the IME has not committed yet
+            cw = font(52).size(self.composing)[0] * r.w // max(1, font(52).size(shown)[0])
+            pygame.draw.line(s, PALETTE[5], (r.right - cw, r.bottom - 6), (r.right, r.bottom - 6), 3)
         if int(self.t * 2) % 2 == 0:
             x = r.right + 4 if shown else box.centerx + r.w // 2 + 6
             pygame.draw.line(s, INK, (x, box.y + 22), (x, box.bottom - 22), 4)
-        text(s, "Pick a buddy:", 30, INK, center=(W // 2, 305))
+        text(s, tr("pick_buddy"), 30, INK, center=(W // 2, 305))
         for rect, a in self.av_rects:
             sel = a == self.avatar
             if sel:
@@ -360,8 +376,9 @@ class LevelScene(Scene):
         p = self.app.player
         img = image(p.get("avatar", "dog"), 72)
         s.blit(img, (130, 18))
-        text(s, f"Hi, {p['name']}!", 48, INK, midleft=(214, 56), kind="title", outline=WHITE, outline_w=4)
-        text(s, "Pick a level", 30, INK_SOFT, center=(W // 2 + 120, 104))
+        text(s, tr("hi", name=p["name"]), 48, INK, midleft=(214, 56), kind="title", outline=WHITE, outline_w=4,
+             max_w=W - 214 - 200)
+        text(s, tr("pick_level"), 30, INK_SOFT, center=(W // 2 + 120, 104))
         mouse = pygame.mouse.get_pos()
         for i, (r, lv) in enumerate(zip(self.tiles, LEVELS)):
             info = Progress.level_info(p, i)
@@ -386,7 +403,8 @@ class LevelScene(Scene):
                     im.fill((255, 255, 255, 110), special_flags=pygame.BLEND_RGBA_MULT)
                 s.blit(im, im.get_rect(center=(rr.centerx - 78 + j * 78,
                                                rr.y + 92 + (bob(self.t, 3, 4, j) if hov else 0))))
-            text(s, lv["title"], 28, INK if unlocked else INK_SOFT, center=(rr.centerx, rr.y + 152))
+            text(s, level_title(i), 28, INK if unlocked else INK_SOFT, center=(rr.centerx, rr.y + 152),
+                 max_w=rr.w - 28)
             if unlocked:
                 for k in range(3):
                     star_shape(s, (rr.centerx - 44 + k * 44, rr.bottom - 36), 17, SUN, filled=k < info["stars"])
@@ -450,10 +468,9 @@ class Card:
         img = pygame.transform.rotozoom(img, wiggle, 1.0) if wiggle else img
         s.blit(img, img.get_rect(center=(r.centerx, cy)))
         if labels:
-            name = ITEMS[self.item]["name"]
-            sz = 36 if len(name) < 9 else 30
-            text(s, name, sz, INK if self.state not in ("wrong", "dim") else (190, 190, 205),
-                 center=(r.centerx, r.bottom - 40))
+            name = item_name(self.item)
+            text(s, name, 36, INK if self.state not in ("wrong", "dim") else (190, 190, 205),
+                 center=(r.centerx, r.bottom - 40), max_w=r.w - 28)
         if self.state == "wrong":
             c = (r.right - 34, r.y + 34)
             pygame.draw.circle(s, BAD, c, 24)
@@ -474,10 +491,10 @@ class GameScene(Scene):
         super().__init__(app)
         self.level_index = level_index
         if practice_items:
-            self.level = dict(title="Practice Time", pool=[], rounds=min(8, len(practice_items)), similar=1,
+            self.level = dict(title=tr("practice_title"), pool=[], rounds=min(8, len(practice_items)), similar=1,
                               labels=True, color=PALETTE[7])
         else:
-            self.level = LEVELS[level_index]
+            self.level = dict(LEVELS[level_index], title=level_title(level_index))
         self.rng = random.Random()
         self.rounds = self._pick_rounds(practice_items)
         self.round_i = -1
@@ -487,8 +504,8 @@ class GameScene(Scene):
         self.home_btn.tag = "back"
         self.speaker = pygame.Rect(0, 0, 160, 160)
         self.speaker.center = (W // 2, 196)
-        self.next_btn = Button((W // 2 + 30, 556, 300, 88), "Next", GOOD, size=42, on_click=self.next_round)
-        self.again_btn = Button((W // 2 - 330, 556, 300, 88), "Hear again", PALETTE[5], icon="ui_speaker",
+        self.next_btn = Button((W // 2 + 30, 556, 300, 88), tr("next"), GOOD, size=42, on_click=self.next_round)
+        self.again_btn = Button((W // 2 - 330, 556, 300, 88), tr("hear_again"), PALETTE[5], icon="ui_speaker",
                                 size=34, on_click=self.replay_reveal)
         self.buttons = [self.home_btn]
         self.corner_buttons(back=False)
@@ -698,7 +715,7 @@ class GameScene(Scene):
         super().draw(s)
         lv = self.level
         # top bar
-        text(s, lv["title"], 40, INK, center=(W // 2, 46), kind="title", outline=WHITE, outline_w=4)
+        text(s, lv["title"], 40, INK, center=(W // 2, 46), kind="title", outline=WHITE, outline_w=4, max_w=640)
         n = len(self.rounds)
         for i in range(n):
             x = W // 2 - (n - 1) * 15 + i * 30
@@ -754,7 +771,7 @@ class GameScene(Scene):
         img = image("ui_speaker", 96)
         s.blit(img, img.get_rect(center=(cx, cy + bounce)))
         if self.state == "play" and not playing:
-            text(s, "Tap to listen", 22, INK, center=(cx, cy + 96), outline=WHITE, outline_w=2)
+            text(s, tr("tap_listen"), 22, INK, center=(cx, cy + 96), outline=WHITE, outline_w=2)
 
     def draw_reveal(self, s):
         k = ease_out_back(self.reveal_t / 0.45)
@@ -768,7 +785,7 @@ class GameScene(Scene):
         panel(s, r, CREAM, radius=40, border=SUN if not self.timed_out else PALETTE[5], border_w=8)
         if k < 0.95:
             return
-        head = "Time's up! It was..." if self.timed_out else "You found it!"
+        head = tr("times_up") if self.timed_out else tr("found_it")
         text(s, head, 40, INK_SOFT if self.timed_out else GOOD, center=(W // 2, 106), kind="title")
         if not self.timed_out:
             for i in range(5):
@@ -779,13 +796,17 @@ class GameScene(Scene):
         scale = 1 + 0.04 * math.sin(self.t * 4)
         img = pygame.transform.rotozoom(img, math.sin(self.t * 2) * 4, scale)
         s.blit(img, img.get_rect(center=pr.center))
-        # the word, letter by letter, highlighting the one being spoken
-        name = ITEMS[self.item]["name"]
-        size = 92 if len(name) <= 8 else 76
-        f = font(size, "body")
-        widths = [f.size(c)[0] + (6 if c != " " else 10) for c in name]
+        # the word, letter by letter (kana by kana in Japanese), highlighting the one being spoken
+        units = i18n.spell_units(item_name(self.item))
+        size = 92 if len(units) <= 8 else 76
+        while True:
+            f = font(size, "body")
+            widths = [f.size(c)[0] + (6 if c != " " else 10) for c in units]
+            if sum(widths) <= 780 or size <= 40:
+                break
+            size -= 6
         x = W // 2 - sum(widths) // 2
-        for i, c in enumerate(name):
+        for i, c in enumerate(units):
             on = i == self.letter_on
             col = PALETTE[i % len(PALETTE)] if on else INK
             y = 452 - (12 if on else 0)
@@ -796,7 +817,7 @@ class GameScene(Scene):
             else:
                 text(s, c, size, col, center=(x + widths[i] // 2, y))
             x += widths[i]
-        text(s, CATEGORIES[ITEMS[self.item]["category"]], 24, INK_SOFT, center=(W // 2, 516))
+        text(s, category_name(ITEMS[self.item]["category"]), 24, INK_SOFT, center=(W // 2, 516))
         for b in self.reveal_buttons:
             b.draw(s)
         # arrow on the Next button
@@ -828,9 +849,9 @@ class LevelCompleteScene(Scene):
         has_next = level_index is not None and level_index + 1 < len(LEVELS)
         btns = []
         if has_next:
-            btns.append(("Next level", GOOD, lambda: self.app.go(GameScene(self.app, level_index + 1))))
-        btns.append(("Play again", PALETTE[1], self.again))
-        btns.append(("Levels" if level_index is not None else "Grown-ups", PALETTE[5], self.back))
+            btns.append((tr("next_level"), GOOD, lambda: self.app.go(GameScene(self.app, level_index + 1))))
+        btns.append((tr("play_again"), PALETTE[1], self.again))
+        btns.append((tr("levels") if level_index is not None else tr("grownups"), PALETTE[5], self.back))
         total = len(btns) * bw + (len(btns) - 1) * 24
         x = W // 2 - total // 2
         for label, col, fn in btns:
@@ -859,16 +880,16 @@ class LevelCompleteScene(Scene):
         panel(s, (W // 2 - 420, 60, 840, 490), CREAM, radius=40, border=SUN, border_w=8)
         trophy = image("ui_trophy", 110)
         s.blit(trophy, trophy.get_rect(center=(W // 2, 130 + bob(self.t, 3, 5))))
-        text(s, "Level complete!", 56, INK, center=(W // 2, 232), kind="title")
+        text(s, tr("level_complete"), 56, INK, center=(W // 2, 232), kind="title")
         text(s, self.level["title"], 28, INK_SOFT, center=(W // 2, 280))
         for k in range(3):
             filled = k < self.shown
             grow = ease_out_back((self.star_t - 0.8 - k * 0.45) / 0.4) if filled else 1
             star_shape(s, (W // 2 - 110 + k * 110, 352), int(44 * grow), SUN, filled=filled)
-        text(s, f"You knew {self.first} of {len(self.results)} sounds right away!", 30, INK,
-             center=(W // 2, 428))
+        text(s, tr("knew_n", first=self.first, total=len(self.results)), 30, INK, center=(W // 2, 428),
+             max_w=800)
         if self.missed:
-            text(s, "Let's listen to these again soon:", 22, INK_SOFT, center=(W // 2, 470))
+            text(s, tr("listen_again_soon"), 22, INK_SOFT, center=(W // 2, 470))
             uniq = list(dict.fromkeys(self.missed))[:8]
             x = W // 2 - (len(uniq) * 62) // 2 + 31
             for it in uniq:
@@ -883,10 +904,9 @@ class LevelCompleteScene(Scene):
 # Grown-ups area: progress reports
 # ===========================================================================
 class ParentsScene(Scene):
-    TABS = ["Overview", "Needs practice", "Recent answers"]
-
     def __init__(self, app):
         super().__init__(app)
+        self.TABS = tr("tabs")
         self.corner_buttons()
         self.players = app.progress.players
         sel = app.player["id"] if app.player else (self.players[0]["id"] if self.players else None)
@@ -896,13 +916,13 @@ class ParentsScene(Scene):
         self.confirm = None          # ("reset"|"delete", pid)
         self.tab_rects = [pygame.Rect(330 + i * 250, 112, 236, 56) for i in range(len(self.TABS))]
         self.area = pygame.Rect(330, 180, 920, 430)
-        self.practice_btn = Button((330, 626, 320, 74), "Practice these", GOOD, icon="ui_ear", size=28,
+        self.practice_btn = Button((330, 626, 320, 74), tr("practice_these"), GOOD, icon="ui_ear", size=28,
                                    on_click=self.practice)
-        self.reset_btn = Button((870, 626, 180, 74), "Reset", PALETTE[1], size=26, on_click=lambda: self.ask("reset"))
-        self.delete_btn = Button((1066, 626, 184, 74), "Delete", BAD, size=26, on_click=lambda: self.ask("delete"))
+        self.reset_btn = Button((870, 626, 180, 74), tr("reset"), PALETTE[1], size=26, on_click=lambda: self.ask("reset"))
+        self.delete_btn = Button((1066, 626, 184, 74), tr("delete"), BAD, size=26, on_click=lambda: self.ask("delete"))
         self.buttons += [self.practice_btn, self.reset_btn, self.delete_btn]
-        self.yes_btn = Button((W // 2 - 230, 420, 210, 76), "Yes", BAD, size=32, on_click=self.do_confirm)
-        self.no_btn = Button((W // 2 + 20, 420, 210, 76), "No", PALETTE[5], size=32, on_click=self.cancel)
+        self.yes_btn = Button((W // 2 - 230, 420, 210, 76), tr("yes"), BAD, size=32, on_click=self.do_confirm)
+        self.no_btn = Button((W // 2 + 20, 420, 210, 76), tr("no"), PALETTE[5], size=32, on_click=self.cancel)
         self.row_play = []
 
     # ---- helpers ---------------------------------------------------------
@@ -991,16 +1011,17 @@ class ParentsScene(Scene):
     # ---- drawing ---------------------------------------------------------
     def draw(self, s):
         self.sky.draw(s, hills=False)
-        text(s, "Grown-ups: Progress", 52, INK, center=(W // 2, 56), kind="title", outline=WHITE, outline_w=4)
+        text(s, tr("parents_title"), 52, INK, center=(W // 2, 56), kind="title", outline=WHITE, outline_w=4,
+             max_w=W - 440)
         for r, p in self.player_rects():
             on = p["id"] == self.sel
             panel(s, r, WHITE if on else CREAM, radius=22, border=PALETTE[5] if on else None, shadow=6)
             s.blit(image(p.get("avatar", "dog"), 56), (r.x + 10, r.y + 9))
-            text(s, p["name"], 28, INK, midleft=(r.x + 78, r.centery))
+            text(s, p["name"], 28, INK, midleft=(r.x + 78, r.centery), max_w=r.w - 90)
         if not self.players:
             panel(s, (330, 180, 920, 430), CREAM, radius=26)
-            text(s, "No players yet.", 40, INK, center=(790, 330))
-            text(s, "Press Play on the title screen to add one.", 28, INK_SOFT, center=(790, 390))
+            text(s, tr("no_players"), 40, INK, center=(790, 330))
+            text(s, tr("no_players_hint"), 28, INK_SOFT, center=(790, 390), max_w=880)
             self.draw_buttons(s)
             self.draw_corner_icons(s)
             return
@@ -1008,7 +1029,7 @@ class ParentsScene(Scene):
             on = i == self.tab
             col = PALETTE[[5, 1, 6][i]]
             pygame.draw.rect(s, col if on else lighten(col, 0.6), r, border_radius=18)
-            text(s, name, 26, WHITE if on else INK, center=r.center)
+            text(s, name, 26, WHITE if on else INK, center=r.center, max_w=r.w - 20)
         panel(s, self.area.inflate(16, 16), CREAM, radius=24, shadow=6)
         content = pygame.Surface(self.area.size, pygame.SRCALPHA)
         self.row_play = []
@@ -1021,8 +1042,7 @@ class ParentsScene(Scene):
             y = self.area.y + int((self.area.h - bar_h) * self.scroll / max(1, height - self.area.h))
             pygame.draw.rect(s, (200, 200, 220), (self.area.right - 4, y, 8, bar_h), border_radius=4)
         if self.tab != 1 or not self.practice_btn.visible:
-            for i, ln in enumerate(wrap("Tip: point out these sounds in real life - a doorbell, a passing car, "
-                                        "birds in the park.", 19, 510)):
+            for i, ln in enumerate(wrap(tr("tip"), 19, 510)):
                 text(s, ln, 19, INK, midleft=(330, 650 + i * 26), kind="plain")
         self.draw_buttons(s)
         self.draw_corner_icons(s)
@@ -1031,9 +1051,9 @@ class ParentsScene(Scene):
             dim.fill((30, 30, 60, 150))
             s.blit(dim, (0, 0))
             panel(s, (W // 2 - 300, 220, 600, 300), CREAM, radius=30)
-            what = "reset all progress for" if self.confirm[0] == "reset" else "delete the player"
-            text(s, f"Really {what}", 32, INK, center=(W // 2, 290))
-            text(s, f"{self.player['name']}?", 40, INK, center=(W // 2, 345), kind="title")
+            line1, line2 = tr("confirm_" + self.confirm[0], name=self.player["name"])
+            text(s, line1, 32, INK, center=(W // 2, 290), max_w=560)
+            text(s, line2, 40, INK, center=(W // 2, 345), kind="title", max_w=560)
             self.yes_btn.draw(s)
             self.no_btn.draw(s)
 
@@ -1041,18 +1061,18 @@ class ParentsScene(Scene):
         p = self.player
         sm = Progress.summary(p)
         y0 = -self.scroll
-        tiles = [("Rounds played", str(sm["rounds"])), ("Right first time", f"{sm['accuracy']:.0f}%"),
-                 ("Sounds known", f"{sm['sounds_known']} / {len(ITEMS)}"),
-                 ("Average answer", f"{sm['avg_secs']:.1f}s"), ("Ran out of time", str(sm["timeouts"])),
-                 ("Stars", f"{sm['stars']} / {len(LEVELS) * 3}")]
+        tiles = [(tr("t_rounds"), str(sm["rounds"])), (tr("t_first"), f"{sm['accuracy']:.0f}%"),
+                 (tr("t_known"), f"{sm['sounds_known']} / {len(ITEMS)}"),
+                 (tr("t_avg"), tr("secs", s=f"{sm['avg_secs']:.1f}")), (tr("t_timeouts"), str(sm["timeouts"])),
+                 (tr("t_stars"), f"{sm['stars']} / {len(LEVELS) * 3}")]
         for i, (label, val) in enumerate(tiles):
             r = pygame.Rect(16 + (i % 3) * 300, y0 + 14 + (i // 3) * 112, 284, 100)
             col = PALETTE[i + 2 if i + 2 < len(PALETTE) else i]
             pygame.draw.rect(c, lighten(col, 0.72), r, border_radius=18)
             text(c, val, 40, darken(col, 0.4), center=(r.centerx, r.y + 40), kind="title")
-            text(c, label, 22, INK, center=(r.centerx, r.y + 78))
+            text(c, label, 22, INK, center=(r.centerx, r.y + 78), max_w=r.w - 16)
         y = y0 + 260
-        text(c, "Levels", 30, INK, topleft=(18, y))
+        text(c, tr("levels"), 30, INK, topleft=(18, y))
         y += 44
         for i, lv in enumerate(LEVELS):
             info = Progress.level_info(p, i)
@@ -1060,16 +1080,17 @@ class ParentsScene(Scene):
             pygame.draw.rect(c, WHITE if i % 2 == 0 else (248, 245, 235), r, border_radius=12)
             pygame.draw.circle(c, lv["color"], (44, r.centery), 18)
             text(c, str(i + 1), 22, WHITE, center=(44, r.centery + 1))
-            text(c, lv["title"], 26, INK, midleft=(76, r.centery))
+            text(c, level_title(i), 26, INK, midleft=(76, r.centery), max_w=330)
             for k in range(3):
                 star_shape(c, (430 + k * 38, r.centery), 14, SUN, filled=k < info["stars"])
-            status = ("Done" if info["completed"] else
-                      ("Ready to play" if i == 0 or Progress.level_info(p, i - 1)["completed"] else "Locked"))
-            text(c, status, 22, INK_SOFT, midleft=(560, r.centery))
-            text(c, f"played {info.get('plays', 0)}x", 22, INK_SOFT, midleft=(740, r.centery))
+            status = (tr("status_done") if info["completed"] else
+                      (tr("status_ready") if i == 0 or Progress.level_info(p, i - 1)["completed"]
+                       else tr("status_locked")))
+            text(c, status, 22, INK_SOFT, midleft=(560, r.centery), max_w=170)
+            text(c, tr("played_n", n=info.get("plays", 0)), 22, INK_SOFT, midleft=(740, r.centery), max_w=150)
             y += 58
         created = p.get("created", "")[:10]
-        text(c, f"Player since {created}", 20, INK_SOFT, topleft=(18, y + 10), kind="plain")
+        text(c, tr("player_since", date=created), 20, INK_SOFT, topleft=(18, y + 10), kind="plain")
         return y + 50 - y0
 
     def draw_trouble(self, c):
@@ -1077,38 +1098,40 @@ class ParentsScene(Scene):
         rows = Progress.trouble(p)
         y0 = -self.scroll
         if not rows:
-            text(c, "Nothing to practise yet - great listening!", 30, INK, center=(self.area.w // 2, 120))
-            text(c, "Sounds your child misses or runs out of time on will show here,", 22, INK_SOFT,
-                 center=(self.area.w // 2, 180), kind="plain")
-            text(c, "together with the pictures they picked by mistake.", 22, INK_SOFT,
-                 center=(self.area.w // 2, 210), kind="plain")
+            text(c, tr("nothing_yet"), 30, INK, center=(self.area.w // 2, 120), max_w=self.area.w - 40)
+            text(c, tr("nothing_yet_1"), 22, INK_SOFT, center=(self.area.w // 2, 180), kind="plain",
+                 max_w=self.area.w - 40)
+            text(c, tr("nothing_yet_2"), 22, INK_SOFT, center=(self.area.w // 2, 210), kind="plain",
+                 max_w=self.area.w - 40)
             return 260
-        text(c, "Sound", 20, INK_SOFT, topleft=(96, y0 + 6))
-        text(c, "Missed", 20, INK_SOFT, topleft=(330, y0 + 6))
-        text(c, "Mixed it up with", 20, INK_SOFT, topleft=(470, y0 + 6))
+        text(c, tr("h_sound"), 20, INK_SOFT, topleft=(96, y0 + 6))
+        text(c, tr("h_missed"), 20, INK_SOFT, topleft=(330, y0 + 6))
+        text(c, tr("h_mixed"), 20, INK_SOFT, topleft=(470, y0 + 6))
         y = y0 + 34
         for i, e in enumerate(rows):
             r = pygame.Rect(10, y, 900, 84)
             pygame.draw.rect(c, WHITE if i % 2 == 0 else (248, 245, 235), r, border_radius=14)
             c.blit(image(e["item"], 64), (22, y + 10))
-            text(c, ITEMS[e["item"]]["name"], 28, INK, midleft=(96, y + 30))
-            text(c, CATEGORIES[ITEMS[e["item"]]["category"]], 18, INK_SOFT, midleft=(96, y + 60), kind="plain")
-            text(c, f"{e['misses']} of {e['attempts']}", 26, BAD if not e["mastered_since"] else INK_SOFT,
-                 midleft=(330, y + 30))
+            text(c, item_name(e["item"]), 28, INK, midleft=(96, y + 30), max_w=226)
+            text(c, category_name(ITEMS[e["item"]]["category"]), 18, INK_SOFT, midleft=(96, y + 60), kind="plain",
+                 max_w=226)
+            text(c, tr("m_of_a", m=e["misses"], a=e["attempts"]), 26, BAD if not e["mastered_since"] else INK_SOFT,
+                 midleft=(330, y + 30), max_w=134)
             if e["timeouts"]:
-                text(c, f"time ran out {e['timeouts']}x", 18, INK_SOFT, midleft=(330, y + 60), kind="plain")
+                text(c, tr("timeouts_n", n=e["timeouts"]), 18, INK_SOFT, midleft=(330, y + 60), kind="plain",
+                     max_w=134)
             x = 470
             for other, cnt in e["mixed_up"].most_common(4):
                 if other in ITEMS:
                     c.blit(image(other, 50), (x, y + 8))
-                    text(c, f"{ITEMS[other]['name']} x{cnt}" if cnt > 1 else ITEMS[other]["name"], 15, INK,
-                         center=(x + 25, y + 70), kind="plain")
+                    label = tr("times_n", name=item_name(other), n=cnt) if cnt > 1 else item_name(other)
+                    text(c, label, 15, INK, center=(x + 25, y + 70), kind="plain", max_w=74)
                     x += 76
             if not e["mixed_up"]:
-                text(c, "(no answer given)", 20, INK_SOFT, midleft=(470, y + 42), kind="plain")
+                text(c, tr("no_answer"), 20, INK_SOFT, midleft=(470, y + 42), kind="plain")
             if e["mastered_since"]:
                 pygame.draw.rect(c, lighten(GOOD, 0.6), (774, y + 12, 50, 26), border_radius=10)
-                text(c, "now OK", 14, darken(GOOD, 0.4), center=(799, y + 25))
+                text(c, tr("now_ok"), 14, darken(GOOD, 0.4), center=(799, y + 25), max_w=46)
             pr = pygame.Rect(840, y + 14, 56, 56)
             pygame.draw.circle(c, PALETTE[1], pr.center, 28)
             pygame.draw.polygon(c, WHITE, [(pr.centerx - 8, pr.centery - 13), (pr.centerx + 14, pr.centery),
@@ -1122,35 +1145,36 @@ class ParentsScene(Scene):
         hist = list(reversed(p["history"]))[:60]
         y0 = -self.scroll
         if not hist:
-            text(c, "No answers recorded yet.", 30, INK, center=(self.area.w // 2, 120))
+            text(c, tr("no_history"), 30, INK, center=(self.area.w // 2, 120))
             return 200
         y = y0 + 8
         for i, r in enumerate(hist):
             row = pygame.Rect(10, y, 900, 58)
             pygame.draw.rect(c, WHITE if i % 2 == 0 else (248, 245, 235), row, border_radius=12)
-            when = datetime.fromtimestamp(r["t"]).strftime("%b %d  %H:%M")
+            when = i18n.format_when(datetime.fromtimestamp(r["t"]))
             text(c, when, 18, INK_SOFT, midleft=(22, row.centery), kind="plain")
-            lvl = "Practice" if r["level"] == "practice" else LEVELS[int(r["level"])]["title"]
-            text(c, lvl, 18, INK_SOFT, midleft=(150, row.centery), kind="plain")
+            lvl = tr("practice") if r["level"] == "practice" else level_title(int(r["level"]))
+            text(c, lvl, 18, INK_SOFT, midleft=(150, row.centery), kind="plain", max_w=160)
             if r["item"] in ITEMS:
                 c.blit(image(r["item"], 44), (318, y + 7))
-                text(c, ITEMS[r["item"]]["name"], 22, INK, midleft=(370, row.centery))
+                text(c, item_name(r["item"]), 22, INK, midleft=(370, row.centery), max_w=164)
             res = r["result"]
             if res == "first_try":
-                chip, col = "Right first time", GOOD
+                chip, col = tr("chip_first"), GOOD
             elif res == "timeout":
-                chip, col = "Time ran out", BAD
+                chip, col = tr("chip_timeout"), BAD
             else:
-                chip, col = f"Got it after {len(r['wrong'])} miss" + ("es" if len(r["wrong"]) > 1 else ""), SUN
+                n = len(r["wrong"])
+                chip, col = (tr("chip_after_1") if n == 1 else tr("chip_after_n", n=n)), SUN
             cr = pygame.Rect(540, y + 13, 200, 32)
             pygame.draw.rect(c, lighten(col, 0.6), cr, border_radius=14)
-            text(c, chip, 17, darken(col, 0.45), center=cr.center)
+            text(c, chip, 17, darken(col, 0.45), center=cr.center, max_w=cr.w - 12)
             x = 754
             for w in r["wrong"][:3]:
                 if w in ITEMS:
                     c.blit(image(w, 34), (x, y + 12))
                     x += 38
-            text(c, f"{r['secs']:.0f}s", 18, INK_SOFT, midleft=(872, row.centery), kind="plain")
+            text(c, tr("secs", s=f"{r['secs']:.0f}"), 18, INK_SOFT, midleft=(872, row.centery), kind="plain")
             y += 64
         return y + 10 - y0
 
@@ -1178,53 +1202,41 @@ class CreditsScene(Scene):
     def build(self):
         lines = []   # (kind, text, size, color, link)
         add = lambda *a: lines.append(a)  # noqa: E731
-        add("title", "EchoSketch", 72, PALETTE[5], None)
-        add("text", f"Version {__version__}  -  released {RELEASE_DATE}", 26, INK_SOFT, None)
+        lang = i18n.lang()
+        add("title", tr("app_name"), 72, PALETTE[5], None)
+        add("text", tr("version_line", v=__version__, date=i18n.RELEASE_DATE[lang]), 26, INK_SOFT, None)
         add("gap", "", 18, None, None)
-        add("head", "Created by", 30, PALETTE[1], None)
+        add("head", tr("created_by"), 30, PALETTE[1], None)
         for c in CREATORS:
             add("big", c, 44, INK, None)
         add("gap", "", 14, None, None)
         add("link", WEBSITE, 32, PALETTE[5], WEBSITE)
         add("link", EMAIL, 32, PALETTE[5], "mailto:" + EMAIL)
         add("gap", "", 14, None, None)
-        add("head", "Recommended ages", 30, PALETTE[1], None)
-        add("big", RECOMMENDED_AGES, 44, INK, None)
+        add("head", tr("rec_ages"), 30, PALETTE[1], None)
+        add("big", i18n.AGES_FULL[lang], 44, INK, None)
         add("gap", "", 14, None, None)
-        add("head", "Licence", 30, PALETTE[1], None)
-        for ln in wrap("EchoSketch is free software: you can redistribute it and/or modify it under the terms "
-                       "of the GNU General Public License as published by the Free Software Foundation, either "
-                       "version 3 of the License, or (at your option) any later version. It is distributed in "
-                       "the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied "
-                       "warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General "
-                       "Public License (GPL 3.0) for more details.", 22, 820):
+        add("head", tr("licence"), 30, PALETTE[1], None)
+        for ln in wrap(tr("gpl"), 22, 820):
             add("text", ln, 22, INK, None)
         add("link", "https://www.gnu.org/licenses/gpl-3.0.html", 24, PALETTE[5],
             "https://www.gnu.org/licenses/gpl-3.0.html")
         add("gap", "", 14, None, None)
-        add("head", "Pictures", 30, PALETTE[1], None)
-        for ln in wrap("Cartoon pictures from Twemoji, Copyright 2019 Twitter, Inc and other contributors, "
-                       "CC-BY 4.0 (https://creativecommons.org/licenses/by/4.0/).", 22, 820):
-            add("text", ln, 22, INK, None)
-        add("head", "Fonts", 30, PALETTE[1], None)
-        add("text", "Andika by SIL International and Fredoka by Milena Brandao, SIL Open Font License 1.1", 22, INK,
-            None)
-        add("head", "Voice", 30, PALETTE[1], None)
-        for ln in wrap("Spoken words made with Piper text-to-speech using the public-domain LJ Speech voice.",
-                       22, 820):
-            add("text", ln, 22, INK, None)
-        add("head", "Music and effects", 30, PALETTE[1], None)
-        add("text", "Original ambient music and sound effects synthesised for EchoSketch (GPL 3.0).", 22, INK, None)
+        for head, body in (("pictures", "pictures_text"), ("fonts", "fonts_text"), ("voice", "voice_text"),
+                           ("music_fx", "music_fx_text")):
+            add("head", tr(head), 30, PALETTE[1], None)
+            for ln in wrap(tr(body), 22, 820):
+                add("text", ln, 22, INK, None)
         add("gap", "", 10, None, None)
-        add("head", "Real-world sound recordings (Wikimedia Commons)", 30, PALETTE[1], None)
+        add("head", tr("recordings"), 30, PALETTE[1], None)
         for key, srcs in self.sound_credits.items():
-            name = ITEMS.get(key, {}).get("name", key)
+            name = item_name(key) if key in ITEMS else key
             for src in srcs:
-                ln = f"{name}: \"{src['file']}\" by {src['author']} ({src['license']})"
+                ln = tr("recording_line", name=name, file=src["file"], author=src["author"], license=src["license"])
                 for i, part in enumerate(wrap(ln, 19, 860)):
                     add("small", part, 19, INK, src["page"] if i == 0 else None)
         add("gap", "", 20, None, None)
-        add("big", "Thank you for playing!", 40, PALETTE[3], None)
+        add("big", tr("thanks"), 40, PALETTE[3], None)
         # lay out
         y = 10
         laid, links = [], []
@@ -1270,7 +1282,7 @@ class CreditsScene(Scene):
 
     def draw(self, s):
         super().draw(s)
-        text(s, "Credits", 56, INK, center=(W // 2, 56), kind="title", outline=WHITE, outline_w=5)
+        text(s, tr("credits_title"), 56, INK, center=(W // 2, 56), kind="title", outline=WHITE, outline_w=5)
         panel(s, self.area.inflate(20, 10), CREAM, radius=30, alpha=238)
         s.set_clip(self.area)
         laid, _ = self.content
@@ -1283,7 +1295,7 @@ class CreditsScene(Scene):
             if link and r.collidepoint(mouse):
                 pygame.draw.line(s, color, (r.x, r.bottom - 4), (r.right, r.bottom - 4), 2)
         s.set_clip(None)
-        text(s, "Scroll or click to pause  •  click a link to open it", 18, INK_SOFT, center=(W // 2, H - 14),
+        text(s, tr("credits_hint"), 18, INK_SOFT, center=(W // 2, H - 14),
              kind="plain")
         self.draw_buttons(s)
         self.draw_corner_icons(s)

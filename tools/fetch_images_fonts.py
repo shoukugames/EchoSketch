@@ -3,7 +3,8 @@
 # Copyright (C) 2026 Shawn Rapaz
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Fetch the cartoon pictures (Twemoji, CC-BY 4.0) and render them to
-crisp 320px PNGs, and fetch the Andika and Fredoka fonts (SIL OFL 1.1).
+crisp 320px PNGs, and fetch the Andika, Fredoka and M PLUS Rounded 1c (Japanese) fonts
+(SIL OFL 1.1).
 Requires: rsvg-convert."""
 import subprocess, sys, time, urllib.request
 from pathlib import Path
@@ -19,6 +20,9 @@ FONTS = {
     "Andika-OFL.txt": "https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/andika/OFL.txt",
     "Fredoka.ttf": "https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/fredoka/Fredoka%5Bwdth,wght%5D.ttf",
     "Fredoka-OFL.txt": "https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/fredoka/OFL.txt",
+    # Japanese; the licence text is assets/fonts/MPLUSRounded1c-OFL.txt (Google Fonts ships none)
+    "MPLUSRounded1c-Bold.ttf": "https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/mplusrounded1c/MPLUSRounded1c-Bold.ttf",
+    "MPLUSRounded1c-Medium.ttf": "https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/mplusrounded1c/MPLUSRounded1c-Medium.ttf",
 }
 # extra pictures used by the interface itself
 UI = {"ui_speaker": "1f50a", "ui_star": "2b50", "ui_trophy": "1f3c6", "ui_ear": "1f442",

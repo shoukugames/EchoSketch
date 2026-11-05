@@ -29,7 +29,23 @@ connect the sound, the picture, the spoken word and its spelling.
 5. Press **Next** for the next sound. At the end of a level you earn up to 3 stars.
 
 Keyboard: `1`–`4` choose a card, `Space` replays the sound, `Enter` continues,
-`Esc` goes back, `M` toggles music, `F11` toggles full screen.
+`Esc` goes back, `M` toggles music, `F11` toggles full screen, `L` (title screen) switches
+language.
+
+## English and Japanese / 日本語
+
+EchoSketch is fully playable in **English** or **Japanese**. Press the **日本語 / English**
+button at the top left of the title screen (or `L`) to switch. The choice is remembered;
+on first start the game follows the computer's language. You can also start with
+`echosketch --lang ja` or `--lang en`.
+
+In Japanese, everything changes: the screens, the spoken voice, the names of the sounds
+(いぬ, しょうぼうしゃ, ヘリコプター…), and the spelling, which is shown and spoken kana by
+kana (small ゃ/ゅ/ょ stay with their kana, ッ is read ちいさい つ and ー is read のばしぼう).
+Child-facing text is written in kana with spaces between phrases, like a picture book; the
+grown-ups area uses ordinary Japanese. Player names can be typed with a Japanese input
+method. People's names, web addresses and the original titles of the sound recordings in
+the credits stay as written.
 
 ## Levels
 
@@ -103,7 +119,7 @@ The game needs only Python 3.9+ and pygame 2. The asset pipeline and packaging n
 |---|---|---|
 | Real sounds | `tools/fetch_sounds.py` | internet, ffmpeg, numpy |
 | Pictures & fonts | `tools/fetch_images_fonts.py` | internet, rsvg-convert |
-| Spoken words | `tools/make_voice.py en_US-ljspeech-high.onnx` | piper-tts, ffmpeg |
+| Spoken words | `tools/make_voice.py --lang en\|ja --model kokoro-v1.0.onnx --voices voices-v1.0.bin` | kokoro-onnx, soundfile, ffmpeg; misaki[ja] + unidic-lite for Japanese |
 | Music & effects | `tools/make_music.py` | numpy, ffmpeg |
 | Icon | `tools/make_icon.py` | pygame, ImageMagick |
 | Credits file | `tools/make_credits.py` | — |
@@ -116,8 +132,8 @@ Build output goes to `build/` and `dist/` (both git-ignored).
 ## Project layout
 
 ```
-echosketch/      game code (catalog.py lists every sound and level)
-assets/          sounds, voice, pictures, music, fonts, icon
+echosketch/      game code (catalog.py lists every sound and level, i18n.py all text in both languages)
+assets/          sounds, voice (Japanese in voice/ja), pictures, music, fonts, icon
 tools/           scripts that produce the assets
 packaging/       PyInstaller spec, .deb and .exe build scripts
 ```
@@ -126,8 +142,9 @@ packaging/       PyInstaller spec, .deb and .exe build scripts
 
 EchoSketch is free software under the **GNU General Public License v3.0**. See [LICENSE](LICENSE).
 Real-world sound recordings come from Wikimedia Commons, pictures from Twemoji
-(CC-BY 4.0), fonts are under the SIL OFL, and the voice is Piper TTS with the public-domain
-LJ Speech voice. Full per-file attribution is in [CREDITS.md](CREDITS.md) and in the
+(CC-BY 4.0), fonts (Andika, Fredoka, and M PLUS Rounded 1c for Japanese) are under the
+SIL OFL, and the voice is the Kokoro-82M neural text-to-speech model (Apache-2.0), voices
+`af_heart` (English) and `jf_alpha` (Japanese). Full per-file attribution is in [CREDITS.md](CREDITS.md) and in the
 in-game Credits screen.
 
 Found a problem? See [BUGREPORT.md](BUGREPORT.md).

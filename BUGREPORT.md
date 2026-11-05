@@ -24,6 +24,7 @@ EchoSketch version:      (e.g. v0.1.0)
 Operating system:        (e.g. Windows 11, Ubuntu 24.04, Debian 12)
 Installed from:          (.deb / .exe / source)
 Screen / full screen?:   (e.g. 1920x1080, full screen)
+Language:                (English / 日本語)
 
 What happened:
 (Describe the problem.)
@@ -47,7 +48,10 @@ Screenshot or video:     (attach if you can)
 
 EchoSketch uses real-world recordings. If a sound is confusing, too quiet, too loud, or
 does not match its picture, please tell us the **level** and the **word shown** (for
-example *"Things That Go - Ship"*). These reports are especially helpful.
+example *"Things That Go - Ship"* or *"のりもの - ふね"*). The same goes for a spoken word,
+letter or kana that sounds wrong in either language. These reports are especially helpful.
+
+日本語での不具合報告も歓迎です。上のテンプレートを日本語で書いていただいてかまいません。
 
 ## Helpful files
 
