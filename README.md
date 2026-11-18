@@ -88,6 +88,23 @@ You can also reset a player's progress or delete a player. Progress is saved to:
 **Tip:** the game works best when you take it outside. When you hear a real doorbell,
 a passing motorbike or birds in the park, ask "What's that sound?"
 
+## Play in the browser
+
+EchoSketch also runs in a web browser, on computers, phones and tablets, with nothing to
+install: <https://shoukugames.org/play/echosketch/> (test page). Everything works by tapping.
+On the New player screen of a phone or tablet, the ⌨ button beside the game opens the device
+keyboard to type the child's name (or just tap Let's go for a default name). Players and
+progress are saved in the browser.
+
+```bash
+python3 -m pip install pygame pygbag     # plus ffmpeg on PATH (or FFMPEG=/path/to/ffmpeg)
+python3 tools/build_web.py               # -> build/web/: upload the folder as-is
+```
+
+The build uses [pygbag](https://pygame-web.github.io/). The top-level `main.py` is the web entry
+point; the browser-only parts (including `echosketch/webkeys.py`) switch on only in the browser.
+The `.apk` file pygbag writes is its bundle of game files, not an Android app.
+
 ## Install
 
 ### Linux (Debian, Ubuntu, Mint and similar, 64-bit)

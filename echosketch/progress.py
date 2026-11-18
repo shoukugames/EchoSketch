@@ -10,7 +10,10 @@ from collections import Counter, defaultdict
 from datetime import datetime
 
 from .catalog import ITEMS, LEVELS
+from . import WEB
 from .paths import data_dir
+
+_WEB_KEY = "echosketch/progress.json"  # browser: localStorage key (files vanish with the page)
 
 SAVE_VERSION = 1
 HISTORY_LIMIT = 3000
@@ -25,6 +28,17 @@ class Progress:
 
     # ---- persistence -----------------------------------------------------
     def load(self):
+        if WEB:
+            try:
+                import platform  # pygbag's bridge to the page
+                raw = platform.window.localStorage.getItem(_WEB_KEY)
+                loaded = json.loads(str(raw)) if raw else None
+            except Exception:  # noqa: BLE001 - a damaged save starts fresh
+                loaded = None
+            if isinstance(loaded, dict) and isinstance(loaded.get("players"), list):
+                self.data.update(loaded)
+                self.data["settings"] = {"music": True, "fullscreen": False, **loaded.get("settings", {})}
+            return
         try:
             with open(self.path, encoding="utf-8") as f:
                 loaded = json.load(f)
@@ -41,6 +55,13 @@ class Progress:
                 pass
 
     def save(self):
+        if WEB:
+            try:
+                import platform  # pygbag's bridge to the page
+                platform.window.localStorage.setItem(_WEB_KEY, json.dumps(self.data))
+            except Exception:  # noqa: BLE001
+                pass
+            return
         tmp = str(self.path) + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:
             json.dump(self.data, f, indent=1)

@@ -22,7 +22,7 @@ os.environ.setdefault("PYGAME_HIDE_SUPPORT_PROMPT", "1")
 os.environ.setdefault("SDL_IME_SHOW_UI", "1")     # show the Japanese IME candidate window
 import pygame  # noqa: E402
 
-from . import __app_name__, __version__, i18n  # noqa: E402
+from . import WEB, __app_name__, __version__, i18n  # noqa: E402
 from .audio import Audio  # noqa: E402
 from .paths import ASSETS  # noqa: E402
 from .progress import Progress  # noqa: E402
@@ -49,6 +49,16 @@ class App:
         self.player = self.progress.get(self.progress.data.get("last_player"))
         self._skies = {}
         self.running = True
+        # Phones and tablets: a keyboard button for typing the player's name (see webkeys.py).
+        self.webkeys = None
+        if WEB:
+            from .webkeys import WebKeys, has_touch_screen
+            if has_touch_screen():
+                try:
+                    self.webkeys = WebKeys(keys=[], keyboard=True)
+                    self.webkeys.show(False)
+                except Exception:  # noqa: BLE001 - the default name still works without it
+                    self.webkeys = None
         from .scenes import TitleScene
         self.scene = TitleScene(self)
         self.next_scene = None
@@ -91,30 +101,43 @@ class App:
         self.progress.save()
 
     def quit(self):
-        self.running = False
+        self.running = WEB  # in a browser there is nothing to quit to
 
     def run(self):
         while self.running:
-            dt = min(self.clock.tick(60) / 1000.0, 0.05)
-            for e in pygame.event.get():
-                if e.type == pygame.QUIT:
-                    self.running = False
-                elif e.type == pygame.KEYDOWN and e.key == pygame.K_F11:
-                    self.toggle_fullscreen()
-                elif e.type == pygame.KEYDOWN and e.key == pygame.K_m and \
-                        e.mod & (pygame.KMOD_CTRL | pygame.KMOD_ALT) == 0 and \
-                        not getattr(self.scene, "wants_text", False):
-                    self.toggle_music()
-                else:
-                    self.scene.handle(e)
-            self.audio.update(dt)
-            self.scene.update(dt)
-            if self.next_scene is not None:
-                self.scene, self.next_scene = self.next_scene, None
-                continue
-            self.scene.draw(self.screen)
-            pygame.display.flip()
+            self.frame()
         pygame.quit()
+
+    async def run_web(self):
+        """Browser main loop: hands control back to the page after every frame."""
+        import asyncio
+        while True:  # a web page has no "quit"; closing the tab ends the game
+            self.running = True
+            self.frame()
+            await asyncio.sleep(0)
+
+    def frame(self):
+        dt = min(self.clock.tick(60) / 1000.0, 0.05)
+        if self.webkeys:
+            self.webkeys.poll()
+        for e in pygame.event.get():
+            if e.type == pygame.QUIT:
+                self.running = WEB
+            elif e.type == pygame.KEYDOWN and e.key == pygame.K_F11 and not WEB:
+                self.toggle_fullscreen()
+            elif e.type == pygame.KEYDOWN and e.key == pygame.K_m and \
+                    e.mod & (pygame.KMOD_CTRL | pygame.KMOD_ALT) == 0 and \
+                    not getattr(self.scene, "wants_text", False):
+                self.toggle_music()
+            else:
+                self.scene.handle(e)
+        self.audio.update(dt)
+        self.scene.update(dt)
+        if self.next_scene is not None:
+            self.scene, self.next_scene = self.next_scene, None
+            return
+        self.scene.draw(self.screen)
+        pygame.display.flip()
 
 
 def main(argv=None):

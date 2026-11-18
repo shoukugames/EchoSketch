@@ -10,7 +10,7 @@ from datetime import datetime
 
 import pygame
 
-from . import CREATORS, EMAIL, WEBSITE, __version__, i18n
+from . import CREATORS, EMAIL, WEB, WEBSITE, __version__, i18n
 from .audio import spelling_steps
 from .catalog import CATEGORIES, CHOICES, ITEMS, LEVELS, ROUND_SECONDS
 from .i18n import category_name, item_name, level_title, tr
@@ -121,6 +121,8 @@ class TitleScene(Scene):
             Button((24, 20, 170, 70), tr("lang_button"), PALETTE[3], size=30, on_click=self.app.toggle_lang,
                    label_lang="en" if i18n.lang() == "ja" else "ja"),
         ]
+        if WEB:  # a web page has nothing to quit to
+            self.buttons = [b for b in self.buttons if b.on_click != self.app.quit]
         self.corner_buttons(back=False)
         rnd = random.Random(3)
         spots = [(120, 220), (250, 560), (110, 450), (1150, 270), (1040, 520), (1170, 440), (300, 300),
@@ -139,7 +141,8 @@ class TitleScene(Scene):
             self.app.go(NewPlayerScene(self.app))
 
     def back(self):
-        self.app.quit()
+        if not WEB:
+            self.app.quit()
 
     def handle(self, e):
         super().handle(e)
@@ -272,16 +275,22 @@ class NewPlayerScene(Scene):
         self.box = pygame.Rect(W // 2 - 300, 180, 600, 90)
         pygame.key.start_text_input()
         pygame.key.set_text_input_rect(self.box)     # where the IME candidate window goes
+        if self.app.webkeys:
+            self.app.webkeys.show(True)
 
     def create(self):
         p = self.app.progress.add_player(self.name or tr("default_player", n=len(self.app.progress.players) + 1),
                                          self.avatar)
         pygame.key.stop_text_input()
+        if self.app.webkeys:
+            self.app.webkeys.show(False)
         self.app.select_player(p)
         self.app.go(LevelScene(self.app))
 
     def back(self):
         pygame.key.stop_text_input()
+        if self.app.webkeys:
+            self.app.webkeys.show(False)
         self.app.go(PlayerScene(self.app) if self.app.progress.players else TitleScene(self.app))
 
     def handle(self, e):
@@ -1265,7 +1274,11 @@ class CreditsScene(Scene):
             for r, link in self.links:
                 if r.y <= ly <= r.bottom:
                     try:
-                        webbrowser.open(link)
+                        if WEB:
+                            import platform  # pygbag's bridge to the page
+                            platform.window.open(link, "_blank")
+                        else:
+                            webbrowser.open(link)
                     except Exception:  # noqa: BLE001 - never crash the game over a browser
                         pass
                     return
