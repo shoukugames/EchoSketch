@@ -1,0 +1,12 @@
+{
+ "_note": "Replace identity_name, publisher and publisher_display_name with the values from Partner Center (Product management -> Product identity) before uploading to the Microsoft Store.",
+ "identity_name": "ShoukuGames.EchoSketch",
+ "publisher": "CN=ShoukuGamesPlaceholder",
+ "publisher_display_name": "Shouku Games",
+ "display_name": "EchoSketch",
+ "description": "A sound matching game for young children. Listen to a real-world sound, tap the picture that makes it, and hear the word said and spelled.",
+ "file_name": "EchoSketch",
+ "exe_name": "EchoSketch.exe",
+ "alias": "shouku-echosketch.exe",
+ "device_capabilities": []
+}
